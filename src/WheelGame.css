@@ -1,0 +1,207 @@
+.wheel-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.wheel-game h1 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.wheels-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px 0;
+}
+
+.wheel-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wheel-section h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #FFE066;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.wheel-container {
+  position: relative;
+  margin: 20px 0;
+}
+
+.wheel {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  position: relative;
+  border: 8px solid #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  overflow: hidden;
+}
+
+.wheel.spinning {
+  transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.wheel-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  clip-path: polygon(0 0, 100% 0, 86.6% 50%);
+  background: var(--segment-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segment-text {
+  transform: rotate(calc(var(--segment-angle) / 2)) translateX(100px) rotate(calc(var(--segment-angle) / -2));
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid #fff;
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.spin-button {
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  margin: 30px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.spin-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.spin-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px 40px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.result h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #FFE066;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.result p {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+  color: white;
+}
+
+.reset-button {
+  background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .wheels-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .wheel {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .segment-text {
+    font-size: 12px;
+    transform: rotate(calc(var(--segment-angle) / 2)) translateX(60px) rotate(calc(var(--segment-angle) / -2));
+  }
+  
+  .wheel-game h1 {
+    font-size: 2rem;
+  }
+  
+  .wheel-section h2 {
+    font-size: 1.3rem;
+  }
+}
