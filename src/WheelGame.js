@@ -1,84 +1,10 @@
 import React, { useState, useRef } from 'react';
 import './WheelGame.css';
+import { Categories, Questions } from './questions';
 
 const WheelGame = () => {
-  const [categories] = useState([
-    'Food & Drinks',
-    'Travel',
-    'Sports',
-    'Entertainment',
-    'Technology',
-    'Nature',
-    'Art & Culture',
-    'Science'
-  ]);
+  const [categories] = useState(Object.values(Categories));
 
-  const [categoryQuestions] = useState({
-    'Food & Drinks': [
-      'What\'s your favorite cuisine?',
-      'Cook or order takeout?',
-      'Sweet or savory snacks?',
-      'Coffee or tea?',
-      'Breakfast food favorite?',
-      'Try exotic foods?'
-    ],
-    'Travel': [
-      'Beach or mountains?',
-      'Solo or group travel?',
-      'Camping or hotels?',
-      'Road trip or flying?',
-      'Dream destination?',
-      'Adventure or relaxation?'
-    ],
-    'Sports': [
-      'Team or individual sports?',
-      'Summer or winter sports?',
-      'Watching or playing?',
-      'Favorite Olympic event?',
-      'Indoor or outdoor sports?',
-      'Morning or evening workout?'
-    ],
-    'Entertainment': [
-      'Movies or TV shows?',
-      'Comedy or drama?',
-      'Books or podcasts?',
-      'Concerts or festivals?',
-      'Gaming platform preference?',
-      'Binge watch or weekly?'
-    ],
-    'Technology': [
-      'iOS or Android?',
-      'Laptop or desktop?',
-      'Smart home devices?',
-      'VR experience interest?',
-      'Social media platform?',
-      'Tech upgrade frequency?'
-    ],
-    'Nature': [
-      'Forest or ocean?',
-      'Sunrise or sunset?',
-      'Gardening interest?',
-      'Favorite season?',
-      'Wildlife photography?',
-      'Hiking difficulty level?'
-    ],
-    'Art & Culture': [
-      'Museums or galleries?',
-      'Classical or modern art?',
-      'Live theater interest?',
-      'Create or observe art?',
-      'Music genre preference?',
-      'Cultural festival type?'
-    ],
-    'Science': [
-      'Space or ocean exploration?',
-      'Biology or physics?',
-      'Documentaries or articles?',
-      'Lab work interest?',
-      'Future technology?',
-      'Science museum visits?'
-    ]
-  });
   
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -126,7 +52,7 @@ const WheelGame = () => {
     setIsSpinningQuestion(true);
     setSelectedQuestion('');
     
-    const questions = categoryQuestions[selectedCategory];
+    const questions = Questions[selectedCategory];
     const spins = 5 + Math.random() * 5;
     const finalRotation = questionRotation + spins * 360 + Math.random() * 360;
     setQuestionRotation(finalRotation);
@@ -151,6 +77,20 @@ const WheelGame = () => {
   return (
     <div className="wheel-game">
       <h1>Spin the Wheel!</h1>
+      
+      {selectedCategory && !showQuestionWheel && (
+        <div className="result">
+          <h2>Category: {selectedCategory}!</h2>
+          <p>Question wheel coming up...</p>
+        </div>
+      )}
+      
+      {selectedQuestion && (
+        <div className="result">
+          <h2>Your Question:</h2>
+          <p>{selectedQuestion}</p>
+        </div>
+      )}
       
       <div className="wheels-container">
         <div className="wheel-section">
@@ -202,14 +142,14 @@ const WheelGame = () => {
                 className={`wheel ${isSpinningQuestion ? 'spinning' : ''}`}
                 style={{ transform: `rotate(${questionRotation}deg)` }}
               >
-                {categoryQuestions[selectedCategory].map((question, index) => {
-                  const angle = (360 / categoryQuestions[selectedCategory].length) * index;
+                {Questions[selectedCategory].map((question, index) => {
+                  const angle = (360 / Questions[selectedCategory].length) * index;
                   return (
                     <div
                       key={question}
                       className="wheel-segment"
                       style={{
-                        '--segment-angle': `${360 / categoryQuestions[selectedCategory].length}deg`,
+                        '--segment-angle': `${360 / Questions[selectedCategory].length}deg`,
                         '--segment-index': index,
                         '--segment-color': colors[index % colors.length],
                         transform: `rotate(${angle}deg)`
@@ -235,20 +175,6 @@ const WheelGame = () => {
           </div>
         )}
       </div>
-      
-      {selectedCategory && !showQuestionWheel && (
-        <div className="result">
-          <h2>Category: {selectedCategory}!</h2>
-          <p>Question wheel coming up...</p>
-        </div>
-      )}
-      
-      {selectedQuestion && (
-        <div className="result">
-          <h2>Your Question:</h2>
-          <p>{selectedQuestion}</p>
-        </div>
-      )}
       
       {(selectedCategory || selectedQuestion) && (
         <button onClick={resetGame} className="reset-button">
