@@ -1,0 +1,1 @@
+This is a website for a question game, which consists of two spinning wheels. The first wheel selects the category of the question, then a second wheel appears to select a question from that category.
