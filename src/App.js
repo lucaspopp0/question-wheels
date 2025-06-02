@@ -1,4 +1,4 @@
-import WheelGame from './WheelGame';
+import WheelGame from './components/WheelGame';
 import './App.css';
 
 function App() {

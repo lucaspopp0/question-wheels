@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import './WheelGame.css';
-import { Categories, Questions } from './questions';
+import { Categories, Questions } from '../../questions';
+
+import './index.css';
 
 const WheelGame = () => {
   const [categories] = useState(Object.values(Categories));
